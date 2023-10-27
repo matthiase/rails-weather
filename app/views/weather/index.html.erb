@@ -1,0 +1,17 @@
+<p><%= @localtime.strftime('%b %d, %Y %I:%M %p')%></p>
+<p><%= @location[:name] %></p>
+<p><%= @current_conditions[:temp] %> &deg; F</p>
+<p><%= @current_conditions[:weather][0][:description].titlecase %></p>
+<p>Feels like <%= @current_conditions[:feels_like] %> &deg;F </p>
+
+<p>Wind <%= @current_conditions[:wind_speed] %>m/s</p>
+<p>Wind degrees <%= @current_conditions[:wind_deg] %></p>
+<p>Wind direction <%= @current_conditions[:wind_direction] %></p>
+<p>Humidity <%= @current_conditions[:humidity] %>&#37;</p>
+<p>Pressue <%= @current_conditions[:pressure] %>hPa</p>
+<p>Visibility <%= @current_conditions[:visibility] %> meters</p>
+<p>Dew point <%= @current_conditions[:dew_point] %> &deg; F</p>
+<p>UV index <%= @current_conditions[:uvi] %> of 11</p>
+
+<p>Sunrise <%= @sunrise.strftime('%I:%M %p')%></p>
+<p>Sunset <%= @sunset.strftime('%I:%M %p')%></p>
