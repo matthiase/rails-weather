@@ -1,17 +1,15 @@
-<p><%= @localtime.strftime('%b %d, %Y %I:%M %p')%></p>
+<p><%= format_datetime(@weather.current.localtime) %></p>
 <p><%= @location[:name] %></p>
-<p><%= @current_conditions[:temp] %> &deg; F</p>
-<p><%= @current_conditions[:weather][0][:description].titlecase %></p>
-<p>Feels like <%= @current_conditions[:feels_like] %> &deg;F </p>
+<p><%= format_temperature(@weather.current.temperature) %></p>
+<p><%= format_temperature(@weather.current.feels_like) %></p>
 
-<p>Wind <%= @current_conditions[:wind_speed] %>m/s</p>
-<p>Wind degrees <%= @current_conditions[:wind_deg] %></p>
-<p>Wind direction <%= @current_conditions[:wind_direction] %></p>
-<p>Humidity <%= @current_conditions[:humidity] %>&#37;</p>
-<p>Pressue <%= @current_conditions[:pressure] %>hPa</p>
-<p>Visibility <%= @current_conditions[:visibility] %> meters</p>
-<p>Dew point <%= @current_conditions[:dew_point] %> &deg; F</p>
-<p>UV index <%= @current_conditions[:uvi] %> of 11</p>
+<p>Wind speed <%= @weather.current.wind_speed %> m/s</p>
+<p>Wind degrees <%= @weather.current.wind_deg %></p>
+<p>Humidity <%= @weather.current.humidity %>&#37;</p>
+<p>Pressue <%= @weather.current.pressure %>hPa</p>
+<p>Visibility <%= @weather.current.visibility %> meters</p>
+<p>Dew point <%= @weather.current.dew_point %> &deg; F</p>
+<p>UV index <%= @weather.current.uvi %> of 11</p>
 
-<p>Sunrise <%= @sunrise.strftime('%I:%M %p')%></p>
-<p>Sunset <%= @sunset.strftime('%I:%M %p')%></p>
+<p>Sunrise <%= format_time(@weather.current.sunrise) %></p>
+<p>Sunset <%= format_time(@weather.current.sunset) %></p>
