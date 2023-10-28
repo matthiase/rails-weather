@@ -10,7 +10,7 @@ class WeatherService
   BASE_URL = 'https://api.openweathermap.org/data/3.0/onecall'
 
   def initialize
-    @appid = Rails.application.credentials.open_weather[:api_key]
+    #@appid = Rails.application.credentials.open_weather[:api_key]
   end
 
   def get(latitude:, longitude:, units: 'imperial')

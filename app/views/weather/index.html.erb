@@ -1,15 +1,25 @@
-<p><%= format_datetime(@weather.current.localtime) %></p>
-<p><%= @location[:name] %></p>
-<p><%= format_temperature(@weather.current.temperature) %></p>
-<p><%= format_temperature(@weather.current.feels_like) %></p>
+<div class="md:mt-36 sm:mt-12 divide-x-0  divide-gray-200 overflow-hidden sm:grid sm:grid-cols-2 sm:gap-px md:divide-x">
+  <div class="p-6">
+    <p><%= format_datetime(@weather.current.localtime) %></p>
+    <p><%= @location[:name] %></p>
+    <p><%= format_temperature(@weather.current.temperature) %></p>
+    <p><%= format_temperature(@weather.current.feels_like) %></p>
 
-<p>Wind speed <%= @weather.current.wind_speed %> m/s</p>
-<p>Wind degrees <%= @weather.current.wind_deg %></p>
-<p>Humidity <%= @weather.current.humidity %>&#37;</p>
-<p>Pressue <%= @weather.current.pressure %>hPa</p>
-<p>Visibility <%= @weather.current.visibility %> meters</p>
-<p>Dew point <%= @weather.current.dew_point %> &deg; F</p>
-<p>UV index <%= @weather.current.uvi %> of 11</p>
+    <p>Wind speed <%= @weather.current.wind_speed %> m/s</p>
+    <p>Wind degrees <%= @weather.current.wind_deg %></p>
+    <p>Humidity <%= @weather.current.humidity %>&#37;</p>
+    <p>Pressue <%= @weather.current.pressure %>hPa</p>
+    <p>Visibility <%= @weather.current.visibility %> meters</p>
+    <p>Dew point <%= @weather.current.dew_point %> &deg; F</p>
+    <p>UV index <%= @weather.current.uvi %> of 11</p>
 
-<p>Sunrise <%= format_time(@weather.current.sunrise) %></p>
-<p>Sunset <%= format_time(@weather.current.sunset) %></p>
+    <p>Sunrise <%= format_time(@weather.current.sunrise) %></p>
+    <p>Sunset <%= format_time(@weather.current.sunset) %></p>
+  </div>
+  <div class="p-6">
+    Two
+  </div>
+</div
+
+
+
