@@ -6,7 +6,7 @@ class Weather
   include ActiveModel::Model
   include ActiveModel::Serializers::JSON
 
-  attr_accessor :latitude, :longitude, :timezone, :timezone_offset, :current
+  attr_accessor :latitude, :longitude, :timezone, :timezone_offset, :current, :forecast
 
   def attributes
     instance_values
@@ -39,5 +39,28 @@ class Weather
     self.current.title = current[:weather].first[:main]
     self.current.description = current[:weather].first[:description]
     self.current.icon = current[:weather].first[:icon]
+
+    self.forecast = hash.fetch(:daily, []).map do |day|
+      day = OpenStruct.new
+      #day.localtime = Time.at(day[:dt]).in_time_zone(timezone)
+      #day.sunrise = Time.at(day[:sunrise]).in_time_zone(timezone)
+      #day.sunset = Time.at(day[:sunset]).in_time_zone(timezone)
+      #day.temperature = day[:temp]
+      #day.feels_like = day[:feels_like]
+      #day.pressure = day[:pressure]
+      #day.humidity = day[:humidity]
+      #day.dew_point = day[:dew_point]
+      #day.uvi = day[:uvi]
+      #day.clouds = day[:clouds]
+      #day.visibility = day[:visibility]
+      #day.wind_speed = day[:wind_speed]
+      #day.wind_deg = day[:wind_deg]
+      #day.wind_gust = day[:wind_gust]
+      #day.weather = day[:weather]
+      #day.title = day[:weather].first[:main]
+      #day.description = day[:weather].first[:description]
+      #day.icon = day[:weather].first[:icon]
+      day
+    end
   end
 end
