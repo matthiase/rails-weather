@@ -1,3 +1,16 @@
-<div class="font-medium">
-    Extended forecast
+<div>
+    <h4 class="text-md">Extended forecast</h4>
+    <div class="mt-4 sm:mt-12 flex flex-col gap-2">
+        <% forecast.each_with_index do |record, index| %>
+            <div class="grid grid-cols-2">
+                <div><%= index == 0 ? 'Today' : format_date(record.localtime) %></div>
+                <div class="flex items-center gap-2">
+                    <img src="<%= weather_icon_url(record.icon) %>" alt="<%= record.description %>" class="h-8 w-8">
+                    <div class="font-medium leading-snug text-gray-800">
+                        <%= format_temperature_range(record.high, record.low) %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
 </div>
