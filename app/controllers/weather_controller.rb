@@ -29,7 +29,7 @@ class WeatherController < ApplicationController
     @weather = Rails.cache.read(@location[:id])
     if @weather.nil?
       @weather = WeatherService.new.get(latitude: @location[:latitude], longitude: @location[:longitude])
-      Rails.cache.write(@location[:id], @weather, expires_in: 5.minutes)
+      Rails.cache.write(@location[:id], @weather, expires_in: 30.minutes)
     else
       @cached_at = @weather.fetched_at
     end
