@@ -37,7 +37,11 @@
 
         // Remove any falsy values from the array and use the remaining values to create a unique id.
         const id = keys.filter((key) => key).join('-').toLowerCase();
-        console.log({ id, lat, lng });
+
+
+        const frame = document.querySelector('turbo-frame#current-weather')
+        frame.src = `/weather/${id}?lat=${lat}&lng=${lng}`
+        frame.reload()
       });
    }
   </script>
@@ -47,14 +51,7 @@
   <div class="flex justify-center mt-8 sm:mt-12">
      <input id="location-input" type="text" placeholder="Search for an address, city or zip code" class="block w-full sm:w-3/4 rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6">
   </div>
-  <div class="md:mt-6 sm:mt-3 divide-x-0 divide-gray-200 overflow-hidden sm:grid sm:grid-cols-2 md:divide-x">
-    <div class="p-6">
-      <%= render 'current', location: @location, conditions: @weather.current %>
-    </div>
-    <div class="p-6">
-      <%= render 'forecast', forecast: @weather.forecast %>
-    </div>
-  </div
+    <turbo-frame id="current-weather" src="/weather"></turbo-frame>
 </div>
 
 <% content_for :body do %>

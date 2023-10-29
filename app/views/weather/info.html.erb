@@ -1,0 +1,17 @@
+<turbo-frame id="current-weather">
+    <div class="md:mt-6 sm:mt-3 divide-x-0 divide-gray-200 overflow-hidden sm:grid sm:grid-cols-2 md:divide-x">
+        <div class="p-6">
+            <%= render 'current', location: @location, conditions: @weather.current %>
+            <% if @cached_at %>
+                <div class="mt-6 text-sm text-gray-500">
+                    <p>
+                        Weather data cached <%= time_ago_in_words(@cached_at) %> ago
+                    </p>
+                </div>
+            <% end %>
+        </div>
+        <div class="p-6">
+            <%= render 'forecast', forecast: @weather.forecast %>
+        </div>
+    </div>
+</turbo-frame>

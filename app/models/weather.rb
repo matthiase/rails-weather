@@ -6,7 +6,7 @@ class Weather
   include ActiveModel::Model
   include ActiveModel::Serializers::JSON
 
-  attr_accessor :latitude, :longitude, :timezone, :timezone_offset, :current, :forecast
+  attr_accessor :latitude, :longitude, :timezone, :timezone_offset, :current, :forecast, :fetched_at
 
   def attributes
     instance_values
@@ -18,6 +18,7 @@ class Weather
     self.longitude = hash[:lon]
     self.timezone = hash[:timezone]
     self.timezone_offset = hash[:timezone_offset]
+    self.fetched_at = Time.current
 
     current = hash.fetch(:current, {})
     self.current = OpenStruct.new

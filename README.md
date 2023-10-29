@@ -35,6 +35,12 @@ Create the master key file in order to read secrets from the credentials file
 echo YOUR_MASTER_KEY > config/master.key
 ```
 
+Turn on caching during development
+```
+bin/rails dev:cache
+```
+Note that this command toggles the cache on and off in development mode. To disable caching, simply run it again.
+
 ### Build and run the application
 Install dependencies
 ```
