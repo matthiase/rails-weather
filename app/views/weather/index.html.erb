@@ -1,8 +1,45 @@
-<div class="md:mt-36 sm:mt-12 divide-x-0 divide-gray-200 overflow-hidden sm:grid sm:grid-cols-2 sm:gap-px md:divide-x">
-  <div class="p-6">
-    <%= render 'current', location: @location, conditions: @weather.current %>
+<% content_for :head do %> 
+  <script type="text/javascript">
+    function initAutocomplete() {
+      const autocompleteInput = document.getElementById('location-input');
+      const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
+        fields: ["address_components", "geometry", "name"],
+        types: ["address"],
+      });
+      autocomplete.addListener('place_changed', function () {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          // The user entered the name of a place that was not suggested and pressed the
+          // enter key, or the request failed.
+          return;
+        }
+
+        const countryComponent = place.address_components.find((component) => component.types.includes('country'));
+        const country = countryComponent ? countryComponent.short_name : '';
+        const postalCodeComponent = place.address_components.find((component) => component.types.includes('postal_code'));
+        const postalCode = postalCodeComponent ? postalCodeComponent.short_name : '';
+        const lat = place.geometry.location.lat();
+        const lng = place.geometry.location.lng();
+        console.log({ country, postalCode, lat, lng });
+      });
+   }
+  </script>
+<% end %>
+
+<div class="flex-1 flex-col items-center justify-center">
+  <div class="flex justify-center mt-8 sm:mt-12">
+     <input id="location-input" type="text" placeholder="Search for an address, city or zip code" class="block w-full sm:w-3/4 rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6">
   </div>
-  <div class="p-6">
-    <%= render 'forecast', forecast: @weather.forecast %>
-  </div>
-</div
+  <div class="md:mt-6 sm:mt-3 divide-x-0 divide-gray-200 overflow-hidden sm:grid sm:grid-cols-2 md:divide-x">
+    <div class="p-6">
+      <%= render 'current', location: @location, conditions: @weather.current %>
+    </div>
+    <div class="p-6">
+      <%= render 'forecast', forecast: @weather.forecast %>
+    </div>
+  </div
+</div>
+
+<% content_for :body do %>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClVzjdwwJb78Z-H-zE7TGjMqlU2DVDvtU&libraries=places&callback=initAutocomplete" async defer></script>
+<% end %>
