@@ -30,19 +30,21 @@
 
         const { country, postal_code: postalCode, administrative_area_level_1: state, locality: city } = components;
         const { location } = place.geometry;
-        const lat = location.lat();
-        const lng = location.lng();
 
         // Depending on the type of location, postal code may not be available. Remove any
         // falsy values from the array and use the remaining values to create a unique id.
+
         const keys = postalCode ? [country, postalCode] : [place.name, state, country];
         const id = keys.filter((key) => key).join('-').toLowerCase();
+        const name = encodeURIComponent(city ? [city, state].join(', ') : place.name);
+        const lat = encodeURIComponent(location.lat());
+        const lng = encodeURIComponent(location.lng());
 
-        // Create a display name for the location independent of the id.
-        const name = city ? [city, state].join(', ') : place.name;
+        // Replace the content of the turbo-frame with the new weather data.
 
         const frame = document.querySelector('turbo-frame#current-weather')
-        frame.src = `/weather/${id}?name=${name}&lat=${lat}&lng=${lng}`
+        const query = `name=${name}&lat=${lat}&lng=${lng}`
+        frame.src = `/weather/${id}?${query}`
         frame.reload()
       });
    }
