@@ -14,7 +14,9 @@ module WeatherHelper
 
   def format_wind(speed, degrees, units = 'imperial')
     unit = units == 'imperial' ? 'mph' : 'm/s'
-    direction = %w[N NNE NE ENE E ESE SE SSE S SSW SW WSW W WNW NW NNW][((degrees % 360) / 22.5).round]
+    # Convert degrees to a compass direction using 16 points.
+    index = ((degrees % 360) / 22.5).round
+    direction = %w[N NNE NE ENE E ESE SE SSE S SSW SW WSW W WNW NW NNW][index]
     "#{number_with_precision(speed, precision: 1)} #{unit} #{direction}"
   end
 
