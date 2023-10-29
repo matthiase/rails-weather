@@ -4,7 +4,7 @@
       const autocompleteInput = document.getElementById('location-input');
       const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
         fields: ["address_components", "geometry", "name"],
-        types: ["address"],
+        types: [],
       });
       autocomplete.addListener('place_changed', function () {
         const place = autocomplete.getPlace();
@@ -13,14 +13,31 @@
           // enter key, or the request failed.
           return;
         }
+        const fields = {
+          'country': 'short_name',
+          'postal_code': 'short_name',
+          'administrative_area_level_1': 'short_name',
+        }
 
-        const countryComponent = place.address_components.find((component) => component.types.includes('country'));
-        const country = countryComponent ? countryComponent.short_name : '';
-        const postalCodeComponent = place.address_components.find((component) => component.types.includes('postal_code'));
-        const postalCode = postalCodeComponent ? postalCodeComponent.short_name : '';
-        const lat = place.geometry.location.lat();
-        const lng = place.geometry.location.lng();
-        console.log({ country, postalCode, lat, lng });
+        const components = Object.entries(fields).reduce((memo, [key, value]) => {
+          const component = place.address_components.find((component) => component.types.includes(key));
+          if (component) {
+            memo[key] = component[value];
+          }
+          return memo;
+        }, {});
+
+        const { country, postal_code: postalCode, administrative_area_level_1: state } = components;
+        const { location } = place.geometry;
+        const lat = location.lat();
+        const lng = location.lng();
+
+        // Depending on the type of location, postal code may not be available.
+        const keys = postalCode ? [country, postalCode] : [place.name, state, country];
+
+        // Remove any falsy values from the array and use the remaining values to create a unique id.
+        const id = keys.filter((key) => key).join('-').toLowerCase();
+        console.log({ id, lat, lng });
       });
    }
   </script>
