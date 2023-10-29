@@ -15,6 +15,7 @@
         }
         const fields = {
           'country': 'short_name',
+          'locality': 'long_name',
           'postal_code': 'short_name',
           'administrative_area_level_1': 'short_name',
         }
@@ -27,20 +28,21 @@
           return memo;
         }, {});
 
-        const { country, postal_code: postalCode, administrative_area_level_1: state } = components;
+        const { country, postal_code: postalCode, administrative_area_level_1: state, locality: city } = components;
         const { location } = place.geometry;
         const lat = location.lat();
         const lng = location.lng();
 
-        // Depending on the type of location, postal code may not be available.
+        // Depending on the type of location, postal code may not be available. Remove any
+        // falsy values from the array and use the remaining values to create a unique id.
         const keys = postalCode ? [country, postalCode] : [place.name, state, country];
-
-        // Remove any falsy values from the array and use the remaining values to create a unique id.
         const id = keys.filter((key) => key).join('-').toLowerCase();
 
+        // Create a display name for the location independent of the id.
+        const name = city ? [city, state].join(', ') : place.name;
 
         const frame = document.querySelector('turbo-frame#current-weather')
-        frame.src = `/weather/${id}?lat=${lat}&lng=${lng}`
+        frame.src = `/weather/${id}?name=${name}&lat=${lat}&lng=${lng}`
         frame.reload()
       });
    }

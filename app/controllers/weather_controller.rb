@@ -9,12 +9,17 @@ class WeatherController < ApplicationController
       longitude: -121.1851928
     }
 
-    location = [params[:id], params[:lat], params[:lng]].compact
-    unless location.empty?
-      id, latitude, longitude = location
+    id, name, latitude, longitude = [
+      params[:id],
+      params[:name],
+      params[:lat],
+      params[:lng]
+    ].compact
+
+    if [latitude, longitude].all?
       @location = {
         id:,
-        name: id,
+        name:,
         latitude:,
         longitude:
       }
